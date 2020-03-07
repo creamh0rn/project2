@@ -29,12 +29,17 @@ def home():
         if session.get("user_name") == None:
             return redirect(url_for("sign_in"))
         else:
-
             return render_template("home.html", user_name = session['user_name'])
     else:
         user_name = request.form.get("user_name")
         session['user_name'] = user_name
-        return render_template("home.html", user_name = user_name)
+        return render_template("home.html", user_name = session['user_name'])
+
+@app.route('/sign_out', methods=["POST"])
+def sign_out():
+    # remove the username from the session if it's there
+    session.pop('user_name', None)
+    return redirect(url_for('sign_in'))
 
 
 

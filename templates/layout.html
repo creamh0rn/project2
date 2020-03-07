@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    var user_name = '{{ user_name }}'
+
+    function signOut() {
+      if (user_name.length !== 0) {
+        document.getElementById("sign_out_button").style.visibility="visible";
+       }
+    }
+
+    window.onload = signOut;
+
+
+
+
+  </script>
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
@@ -33,6 +48,7 @@
       .row.content {height: auto;}
     }
   </style>
+
 </head>
 <body>
 
@@ -55,6 +71,9 @@
           </button>
         </span>
       </div>
+      <form action="{{ url_for('sign_out') }}" method ="POST" style="margin-top: 20px; visibility: hidden;" ><button class="btn btn-secondary" id="sign_out_button">Sign Out</button></form>
+
+
     </div>
 
     <div class="col-sm-9">
