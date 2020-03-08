@@ -7,28 +7,69 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script>
     var user_name = '{{ user_name }}'
 
+    //sign out button on and off
     function signOut() {
       if (user_name.length !== 0) {
         document.getElementById("sign_out_button").style.visibility="visible";
        }
     }
-
     window.onload = signOut;
+   </script>
 
+  <script>
+      let counter = 1
+      const quantity = 20;
+      document.addEventListener('DOMContentLoaded', load);
+     function load() {
 
+                // Set start and end post numbers, and update counter.
+                const start = counter;
+                const end = start + quantity - 1;
+                counter = end + 1;
 
+                // Open new request to get new posts.
+                const request = new XMLHttpRequest();
+                request.open('POST', '/topics');
+                request.onload = () => {
+                    const data = JSON.parse(request.responseText);
+                    data.forEach(add_topic);
+                };
+
+                // Add start and end points to request data.
+                const data = new FormData();
+                data.append('start', start);
+                data.append('end', end);
+
+                // Send request.
+                request.send(data);
+            };
+
+    //tryna make a topic
+    function add_topic(contents) {
+      const topic = document.createElement('div');
+      topic.className = 'topic';
+      topic.innerHTML = contents;
+
+      document.querySelector('#topics').append(topic);
+
+    };
 
   </script>
+
+
+
+
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
 
     /* Set gray background color and 100% height */
     .sidenav {
-      background-color: #f1f1f1;
+      background-color: #dcdcdc;
       height: 100%;
     }
 
@@ -46,6 +87,13 @@
         padding: 15px;
       }
       .row.content {height: auto;}
+    }
+
+    #sign_out_button {
+      margin-top: 20px;
+      width: 50%;
+      visibility: hidden;
+
     }
   </style>
 
@@ -71,7 +119,9 @@
           </button>
         </span>
       </div>
-      <form action="{{ url_for('sign_out') }}" method ="POST" style="margin-top: 20px; visibility: hidden;" ><button class="btn btn-secondary" id="sign_out_button">Sign Out</button></form>
+      <div>
+      <form action="{{ url_for('sign_out') }}" method ="POST" ><button class="btn btn-secondary" id="sign_out_button">Sign Out</button></form>
+      </div>
 
 
     </div>
