@@ -7,22 +7,36 @@ Home
 {% block content %}
 
 
-
-<div class="jumbotron jumbotron-fluid" style="background:#fa8072;">
+<div class="jumbotron jumbotron-fluid" style="background:#fa8072;" xmlns="http://www.w3.org/1999/html">
     <div class = "container">
         <h1 class="display-4" style="color:white;">Hello {{ user_name }}</h1>
         <h4 class="display-4" style="color:grey";>Choose a channel on the right to start talking</h4>
     </div>
 </div>
-
+ <span style="topic">
 <div class="container">
-    <div id="topics">
+    <table>
 
-    </div>
+            <div id="topics"></div>
 
+    </table>
 </div>
 
+</span>
+
+<form action="{{ url_for('add_new_chat') }}" method="post">
+    <input id="message" type="text" placeholder="mesage"></input><button class="btn btn-secondary">Send text</button></form>
 
 
+
+
+
+        <div>Yes Votes: <span id="yes">{{ votes["yes"] }}</span></div>
+        <div>No Votes: <span id="no">{{ votes["no"] }}</span></div>
+        <div>Maybe Votes: <span id="maybe">{{ votes["maybe"] }}<span></div>
+
+        <button data-vote="yes">Yes</button>
+        <button data-vote="no">No</button>
+        <button data-vote="maybe">Maybe</button>
 
 {% endblock %}

@@ -8,6 +8,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+  <script src="{{ url_for('static', filename='index.js') }}"></script>
   <script>
     var user_name = '{{ user_name }}'
 
@@ -16,49 +18,15 @@
       if (user_name.length !== 0) {
         document.getElementById("sign_out_button").style.visibility="visible";
        }
-    }
+    };
     window.onload = signOut;
+
    </script>
 
-  <script>
-      let counter = 1
-      const quantity = 20;
-      document.addEventListener('DOMContentLoaded', load);
-     function load() {
+   <script src="{{ url_for('static', filename='index.js') }}"></script>
 
-                // Set start and end post numbers, and update counter.
-                const start = counter;
-                const end = start + quantity - 1;
-                counter = end + 1;
 
-                // Open new request to get new posts.
-                const request = new XMLHttpRequest();
-                request.open('POST', '/topics');
-                request.onload = () => {
-                    const data = JSON.parse(request.responseText);
-                    data.forEach(add_topic);
-                };
 
-                // Add start and end points to request data.
-                const data = new FormData();
-                data.append('start', start);
-                data.append('end', end);
-
-                // Send request.
-                request.send(data);
-            };
-
-    //tryna make a topic
-    function add_topic(contents) {
-      const topic = document.createElement('div');
-      topic.className = 'topic';
-      topic.innerHTML = contents;
-
-      document.querySelector('#topics').append(topic);
-
-    };
-
-  </script>
 
 
 
@@ -95,6 +63,22 @@
       visibility: hidden;
 
     }
+
+    .topic {
+
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: grey;
+
+    }
+
+    .chat_text {
+      font-size: 20px;
+      font-weight: bold;
+
+    }
+
   </style>
 
 </head>
@@ -105,11 +89,19 @@
     <div class="col-sm-3 sidenav">
       <h4>flack</h4>
 
-      <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Home</a></li>
-        <li><a href="#section2">Friends</a></li>
-        <li><a href="#section3">Family</a></li>
-        <li><a href="#section3">Photos</a></li>
+      <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Cras justo odio
+            <span class="badge badge-primary badge-pill">14</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Dapibus ac facilisis in
+            <span class="badge badge-primary badge-pill">2</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('home') }}">Morbi leo risus</a>
+            <span class="badge badge-primary badge-pill">1</span>
+          </li>
       </ul><br>
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search Blog..">

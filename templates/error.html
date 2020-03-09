@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ error_message }}
+{% endblock %}
+
+{% block label %}
+    {{ error_message}}
+{% endblock %}
+
+{% block content %}
+    {{ error_message }}
+
+{% if error_message %}
+   <pre>{{ error_message }}</pre>
+{% endif %}
+
+{% endblock %}
